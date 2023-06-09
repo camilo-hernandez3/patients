@@ -1,0 +1,49 @@
+<ng-template #vacio>
+  <div
+  class="alert alert-warning text-center"
+>
+  No hay Pacientes para mostrar
+</div>
+</ng-template>
+
+
+<table class="table mt-10" *ngIf="patients.length>0; else vacio">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Dni</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Edad</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let patient of patients">
+        <th scope="row">{{patient.patient_id}}</th>
+        <td>{{patient.dni}}</td>
+        <td>{{patient.first_name}}</td>
+        <td>{{patient.last_name}}</td>
+        <td>{{patient.email}}</td>
+        <td>{{patient.phones}}</td>
+        <td>{{  calculateAge(patient.birthdate)}}</td>
+        <td>{{patient.City.name}}</td>
+        <td>
+            <button 
+            mat-button 
+            mat-raised 
+            color="primary"
+            [routerLink]="['/patients/edit', patient.patient_id]">
+            <mat-icon>edit</mat-icon>
+            Editar
+        </button>
+        
+        </td>
+        
+      </tr>
+      
+    </tbody>
+  </table>

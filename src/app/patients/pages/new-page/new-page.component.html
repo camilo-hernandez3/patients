@@ -1,0 +1,104 @@
+<h1>
+    {{currentPatient.patient_id?'Editar':'Crear'}}
+    Paciente
+    <small *ngIf="currentPatient.patient_id">
+        {{currentPatient.first_name}} {{currentPatient.last_name}}
+    </small>
+</h1>
+
+<mat-divider class="mb-2"></mat-divider>
+
+<div class="grid">
+    <div class="col-12 sm:col-6">
+        <mat-card>
+            <mat-card-content>
+                <form class="grid" [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+
+                    <mat-form-field class="col-12 sm:col-6">
+                        <mat-label>Dni</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="dni">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12 sm:col-6">
+                        <mat-label>Nombre</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="first_name">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Apellidos</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="last_name">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Email</mat-label>
+                        <input 
+                            type="email" 
+                            matInput 
+                            required
+                            formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field class="col-12">
+                        <mat-label>Telefono</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="phones">
+                    </mat-form-field>
+                    <mat-form-field class="col-12">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input 
+                            matInput 
+                            [matDatepicker]="picker"
+                            formControlName="birthdate">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Ciudad</mat-label>
+                        <mat-select required formControlName="city_id">
+                            <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                                {{city.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </form>
+                <div class="flex justify-content-between">
+                    <button 
+                        mat-flat-button
+                        *ngIf="currentPatient.patient_id"
+                        (click)="onDeletePatient()"
+                        color="warn">
+                        Borrar
+                    </button>
+                    <span></span>
+                    <button 
+                        mat-flat-button
+                        color="primary"
+                        (click)="onSubmit()">
+                        <mat-icon>save</mat-icon>
+                        Guardar
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+
+</div>
