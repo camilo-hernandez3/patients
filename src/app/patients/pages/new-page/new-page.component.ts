@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { City, Patient } from '../../interfaces/patient.interface';
 import { PatientServiceService } from '../../services/patient-service.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
 export class NewPageComponent implements OnInit {
 
   public cities: City[] =[];
-
+/* 
   public patientForm  = new FormGroup({
     patient_id: new FormControl(0),
     dni: new FormControl(''),
@@ -27,7 +27,20 @@ export class NewPageComponent implements OnInit {
     phones: new FormControl(''),
     birthdate: new FormControl(''),
     city_id: new FormControl(1),
+  }); */
+
+  
+  public patientForm: FormGroup = this.fb.group({
+    patient_id:[0],
+    dni: ['', [Validators.required, Validators.minLength(3)]],
+    first_name: ['', [Validators.required, Validators.minLength(3)]],
+    last_name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required]],
+    phones: ['', [Validators.required,  Validators.minLength(10)]],
+    birthdate: ['', [Validators.required]],
+    city_id: [0,  [Validators.required]],
   });
+
 
 
 
@@ -36,7 +49,8 @@ export class NewPageComponent implements OnInit {
       private activatedRoute: ActivatedRoute,
       private router: Router,
       private snackbar: MatSnackBar,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private fb: FormBuilder
   ) { }
 
   get currentPatient():Patient{
@@ -67,7 +81,13 @@ export class NewPageComponent implements OnInit {
 
   onSubmit():void{
 
-    if(this.patientForm.invalid) return;
+
+    if (this.patientForm.invalid) {
+      this.patientForm.markAllAsTouched();
+      return;
+    }
+
+   
 
     if(this.currentPatient.patient_id){
 
@@ -86,6 +106,35 @@ export class NewPageComponent implements OnInit {
          
     });
     
+  }
+
+  isValidField(field: string): boolean | null {
+    return (
+      this.patientForm.controls[field].errors && this.patientForm.controls[field].touched
+    );
+  }
+
+  getFieldError(field: string): string | null {
+
+    this.patientForm.controls[field];
+    if (!this.patientForm.controls[field]) return null;
+
+    const errors = this.patientForm.controls[field].errors || {};
+
+    for(const key of Object.keys(errors)){
+      switch (key) {
+        case 'required': 
+          return 'Este campo es requerido';
+
+        case 'minlength': 
+          return `Minimo ${errors["minlength"].requiredLength} caracters.`;
+        case 'min':
+          return `El valor minimo es ${errors['min'].min}`;
+      }
+    }
+
+    return null;
+
   }
 
   onDeletePatient(){

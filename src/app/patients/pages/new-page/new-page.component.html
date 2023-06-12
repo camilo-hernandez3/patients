@@ -21,6 +21,12 @@
                             matInput 
                             required
                             formControlName="dni">
+                        
+                            <span  
+                                *ngIf="isValidField('dni')"
+                                class="form-text text-danger">
+                                {{getFieldError('dni')}}
+                            </span>
                     </mat-form-field>
 
                     <mat-form-field class="col-12 sm:col-6">
@@ -30,6 +36,11 @@
                             matInput 
                             required
                             formControlName="first_name">
+                        <span  
+                            *ngIf="isValidField('first_name')"
+                            class="form-text text-danger">
+                            {{getFieldError('first_name')}}
+                        </span>
                     </mat-form-field>
 
                     <mat-form-field class="col-12">
@@ -39,6 +50,11 @@
                             matInput 
                             required
                             formControlName="last_name">
+                        <span  
+                            *ngIf="isValidField('last_name')"
+                            class="form-text text-danger">
+                            {{getFieldError('last_name')}}
+                        </span>
                     </mat-form-field>
 
                     <mat-form-field class="col-12">
@@ -48,6 +64,11 @@
                             matInput 
                             required
                             formControlName="email">
+                        <span  
+                            *ngIf="isValidField('email')"
+                            class="form-text text-danger">
+                            {{getFieldError('email')}}
+                        </span>
                     </mat-form-field>
                     <mat-form-field class="col-12">
                         <mat-label>Telefono</mat-label>
@@ -56,6 +77,11 @@
                             matInput 
                             required
                             formControlName="phones">
+                        <span  
+                            *ngIf="isValidField('phones')"
+                            class="form-text text-danger">
+                            {{getFieldError('phones')}}
+                        </span>
                     </mat-form-field>
                     <mat-form-field class="col-12">
                         <mat-label>Fecha de nacimiento</mat-label>
@@ -66,6 +92,11 @@
                         <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <span  
+                            *ngIf="isValidField('birthdate')"
+                            class="form-text text-danger">
+                            {{getFieldError('birthdate')}}
+                        </span>
                       
                     </mat-form-field>
 
@@ -76,6 +107,11 @@
                                 {{city.name}}
                             </mat-option>
                         </mat-select>
+                        <span  
+                            *ngIf="isValidField('city_id')"
+                            class="form-text text-danger">
+                            {{getFieldError('city_id')}}
+                        </span>
                     </mat-form-field>
 
                 </form>
