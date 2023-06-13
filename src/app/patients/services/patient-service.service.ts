@@ -17,7 +17,13 @@ export class PatientServiceService {
   headers = new HttpHeaders({ 'key': 'c2330fce0ce03c10571d888c2a8d7181' });
   requestOptions = { headers: this.headers };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+
+  }
+
+
+ 
+ 
 
   getPatients(): Observable<Patient[]> {
     

@@ -26,7 +26,10 @@ export class ListPageComponent implements OnInit {
  
   constructor(
     private patientsService:PatientServiceService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) {
+      
+    }
+
   dataSource:any;
 
   public myForm: FormGroup = this.fb.group({
@@ -37,6 +40,7 @@ export class ListPageComponent implements OnInit {
     return  this.myForm.controls['show'].value;
   }
 
+  
   ngOnInit(): void {
 
     this.patientsService.getPatients()
@@ -45,9 +49,15 @@ export class ListPageComponent implements OnInit {
         this.dataSource = new MatTableDataSource(patients);
       });
 
-    
+      this.myForm.reset({show: JSON.parse(localStorage.getItem('show')!)|| false})  ;
+
+      this.myForm.get('show')?.valueChanges.subscribe((val:boolean) => {
+         localStorage.setItem('show', JSON.stringify(val));
+      });
 
   }
+
+ 
 
   calculateAge(fechaNacimiento: string):number{
     let nacimiento = new Date(fechaNacimiento);
