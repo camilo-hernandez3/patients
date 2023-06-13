@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from '../../interfaces/patient.interface';
 import { PatientServiceService } from '../../services/patient-service.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list-page',
@@ -21,8 +22,20 @@ export class ListPageComponent implements OnInit {
   'acciones'];
 
 
-  constructor(private patientsService:PatientServiceService) { }
+
+ 
+  constructor(
+    private patientsService:PatientServiceService,
+    private fb: FormBuilder) { }
   dataSource:any;
+
+  public myForm: FormGroup = this.fb.group({
+    show:[true]
+  });
+
+  get stateEdad(){
+    return  this.myForm.controls['show'].value;
+  }
 
   ngOnInit(): void {
 

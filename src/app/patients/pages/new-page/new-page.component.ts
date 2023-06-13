@@ -29,18 +29,22 @@ export class NewPageComponent implements OnInit {
     city_id: new FormControl(1),
   }); */
 
+
+  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   
   public patientForm: FormGroup = this.fb.group({
     patient_id:[0],
     dni: ['', [Validators.required, Validators.minLength(3)]],
     first_name: ['', [Validators.required, Validators.minLength(3)]],
     last_name: ['', [Validators.required, Validators.minLength(3)]],
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     phones: ['', [Validators.required,  Validators.minLength(10)]],
     birthdate: ['', [Validators.required]],
     city_id: [0,  [Validators.required]],
   });
 
+
+ 
 
 
 
@@ -130,6 +134,8 @@ export class NewPageComponent implements OnInit {
           return `Minimo ${errors["minlength"].requiredLength} caracters.`;
         case 'min':
           return `El valor minimo es ${errors['min'].min}`;
+        case 'pattern':
+           return `El Correo no es valido`;
       }
     }
 
